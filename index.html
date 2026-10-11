@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ff7900">
+<title>NAPO | Orange Cash</title>
+<style>
+:root{--orange:#ff7900;--ink:#202124;--muted:#68707b;--bg:#fff8f1}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;padding:22px;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#fff,#fff2e5);font-family:Arial,Tahoma,sans-serif;color:var(--ink)}
+.card{width:100%;max-width:420px;text-align:center;background:#fff;padding:28px 22px;border:1px solid #f3e1d0;border-radius:25px;box-shadow:0 16px 45px #5b321410}
+.brand{font-size:26px;font-weight:900;letter-spacing:3px}.brand span{color:var(--orange)}
+.tag{display:inline-block;background:#fff0e1;color:#a64b00;border-radius:30px;padding:8px 13px;margin:17px 0 8px;font-size:12px;font-weight:bold}
+h1{font-size:24px;margin:8px 0}p{font-size:14px;line-height:1.8;color:var(--muted)}
+.number{direction:ltr;unicode-bidi:isolate;background:#fff8f1;border:1px dashed #ffb36f;border-radius:15px;padding:17px 8px;font-size:27px;font-weight:800;letter-spacing:1px;margin:20px 0 12px}
+button{width:100%;border:0;border-radius:14px;padding:15px 12px;font-size:16px;font-weight:bold;cursor:pointer}
+.copy{background:var(--orange);color:white}.copylink{background:#242424;color:white;margin-top:10px}
+.toast{min-height:22px;margin-top:10px;color:#16803c;font-size:13px}
+.steps{text-align:right;background:#fafafa;border:1px solid #eee;border-radius:15px;padding:14px 17px;margin-top:18px}
+.steps strong{font-size:14px}.steps ol{padding-right:20px;margin:8px 0 0;color:#555;font-size:13px;line-height:2}
+.small{font-size:11px!important;margin-top:17px}.foot{color:#aaa;font-size:11px;margin-top:17px}
+</style>
+</head>
+<body>
+<main class="card">
+  <div class="brand">NA<span>PO</span></div>
+  <div class="tag">ORANGE CASH • WALLET TRANSFER</div>
+  <h1>حوّل على Orange Cash</h1>
+  <p>انسخ رقم المحفظة، ثم افتح خدمة Orange Cash لإتمام التحويل بنفسك.</p>
+  <div class="number" id="wallet">01275099118</div>
+  <button class="copy" id="copyNumber" type="button">نسخ رقم المحفظة</button>
+  <button class="copylink" id="copyLink" type="button">نسخ رابط الصفحة</button>
+  <div class="toast" id="toast" aria-live="polite"></div>
+  <section class="steps">
+    <strong>خطوات التحويل</strong>
+    <ol>
+      <li>اضغط «نسخ رقم المحفظة».</li>
+      <li>افتح Orange Max it أو خدمة Orange Cash.</li>
+      <li>اختر تحويل الأموال وأدخل الرقم والمبلغ.</li>
+      <li>راجع بيانات المستلم والمبلغ قبل التأكيد.</li>
+    </ol>
+  </section>
+  <p class="small">الصفحة لا تنفّذ التحويل بنفسها. لا تشارك الرقم السري أو رمز التأكيد مع أي شخص.</p>
+  <div class="foot">Powered by NAPO NFC</div>
+</main>
+<script>
+const toast=document.getElementById('toast');
+async function copyText(text,success){
+ try{
+   await navigator.clipboard.writeText(text);
+   toast.textContent=success;
+ }catch(e){
+   const t=document.createElement('textarea');t.value=text;t.style.position='fixed';t.style.opacity='0';
+   document.body.appendChild(t);t.select();
+   const ok=document.execCommand('copy');t.remove();
+   toast.textContent=ok?success:'تعذّر النسخ تلقائيًا. اضغط مطولًا لنسخ النص.';
+ }
+}
+document.getElementById('copyNumber').addEventListener('click',()=>copyText('01275099118','تم نسخ رقم المحفظة.'));
+document.getElementById('copyLink').addEventListener('click',()=>{
+ if(location.protocol==='file:'){toast.textContent='ارفع الصفحة على استضافة أولًا؛ بعدها انسخ رابط https من شريط العنوان.';return;}
+ copyText(location.href,'تم نسخ رابط الصفحة.');
+});
+</script>
+</body>
+</html>
